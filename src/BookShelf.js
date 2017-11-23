@@ -5,11 +5,17 @@ import Book from './Book'
 class BookShelf extends Component {
   static propTypes = {
     shelfTitle: PropTypes.string.isRequired,
-    books: PropTypes.array.isRequired
+    books: PropTypes.array.isRequired,
+    onChangeShelf: PropTypes.func.isRequired
+  }
+
+  onChangeShelf = (book, newShelf) => {
+    console.log(book, newShelf)
+    this.props.onChangeShelf(book, newShelf)
   }
 
   render() {
-    const { shelfTitle, books } = this.props
+    const { shelfTitle, books, onChangeShelf } = this.props
 
     return (
       <div className="bookshelf">
@@ -20,6 +26,7 @@ class BookShelf extends Component {
             <li key={book.id}>
               <Book
                 book={ book }
+                onChangeShelf={ this.onChangeShelf }
               />
             </li>
             )}
