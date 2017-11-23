@@ -15,13 +15,19 @@ class SearchBook extends Component {
     searchResults: []
   }
 
+  // Update the query & search results as the user types
   updateQuery = (query) => {
     this.setState({query: query})
     
     BooksAPI.search(query, 40).then((searchResults) => {
+      // If the query does give any search results,
+      // set searchResults to an empty array
       if (searchResults === undefined || searchResults.hasOwnProperty('error')) {
         this.setState({searchResults: []})
       } else {
+        // Check if the search results are on the users shelf already.
+        // If yes, Make sure to update the shelfs of the books that are displayed.
+        // If the book is not on the users shelf, it should show 'None' as a shelf
         for (const b of searchResults) {
           for (const book of this.props.books) {
             if (b.id === book.id) {

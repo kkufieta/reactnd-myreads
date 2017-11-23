@@ -13,9 +13,10 @@ class Book extends Component {
 
   render() {
     const book = this.props.book
+    // If the bookCover is not available, show a generic cover
     const bookCover = book.imageLinks ? 
       `url(${book.imageLinks.thumbnail})` :
-      'url("./icons/bookCoverNotAvailable.jpg")'
+      'url("http://via.placeholder.com/128x193?text=cover+not+available")'
 
     return (
       <div className="book">

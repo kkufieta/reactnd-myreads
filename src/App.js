@@ -16,6 +16,7 @@ class BooksApp extends React.Component {
     }
   }
 
+  // Load all the books once React has mounted
   componentDidMount() {
     BooksAPI.getAll().then((books) => {
         this.setState({books})
@@ -23,8 +24,11 @@ class BooksApp extends React.Component {
     
   }
 
+  
+  // Called when the user changes the shelf for a book
   onChangeShelf = (book, newShelf) => {
     book.shelf = newShelf
+    // If the book is on the users shelf, change the shelf status of the book
     if (this.state.books.find((b) => {return b.id === book.id})) {
       this.setState(state => {
         state.books.map(
@@ -36,12 +40,14 @@ class BooksApp extends React.Component {
           }
         )
       })
+    // If the book is not yet on the shelf, add it to shelf
     } else {
       this.setState(state => {
         state.books.push(book)
       })
     }
 
+    // Save the changes in the backend
     BooksAPI.update(book, newShelf)
   }
 
@@ -52,7 +58,7 @@ class BooksApp extends React.Component {
         <Route exact path="/" render={() => (
           <div className="list-books">
             <div className="list-books-title">
-              <h1>MyReads</h1>
+              <h1>Katharinas Books</h1>
             </div>
             <div className="list-books-content">
               <div>
